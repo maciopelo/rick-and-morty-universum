@@ -1,0 +1,194 @@
+@import "../../../styles/variables";
+@import "../../../styles/classes";
+
+.character-modal-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 655px;
+  width: 100%;
+  background-color: $dark;
+  border-radius: $radius;
+  box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.65);
+  padding: 2.7rem 2.5rem;
+
+  & > .close-wrapper {
+    position: absolute;
+    right: 32px;
+    top: 5px;
+  }
+}
+
+.character-info {
+  display: flex;
+  margin-bottom: 35px;
+
+  &__image {
+    margin-right: 20px;
+    img {
+      width: 300px;
+      height: 300px;
+      border-radius: $radius;
+    }
+  }
+}
+
+.character-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__personal {
+    & > span {
+      display: block;
+      color: $light;
+    }
+
+    & > span:nth-of-type(1) {
+      font-size: 2.4rem;
+      font-weight: bold;
+      margin-bottom: 0.2em;
+    }
+    & > span:nth-of-type(2) {
+      position: relative;
+      font-size: 1.6rem;
+      margin-left: 20px;
+
+      &[data-status="alive"] {
+        &::before {
+          background-color: green;
+        }
+      }
+
+      &[data-status="dead"] {
+        &::before {
+          background-color: red;
+        }
+      }
+
+      &[data-status="unknown"] {
+        &::before {
+          background-color: gray;
+        }
+      }
+
+      &::before {
+        top: 0;
+        bottom: 0;
+        left: -1em;
+        margin: auto;
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  &__other {
+    & > span {
+      display: block;
+    }
+
+    & > span:nth-of-type(1) {
+      font-size: 1.5rem;
+      color: #b8b8b8;
+      margin-bottom: 0.2em;
+    }
+    & > span:nth-of-type(2) {
+      font-size: 1.6rem;
+      color: $light;
+    }
+  }
+}
+
+.character-comments {
+  @extend .custom-scrollbar;
+  max-height: 250px;
+  margin-bottom: 25px;
+
+  &__header {
+    display: block;
+    font-size: 1.6rem;
+    color: $light;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+    text-decoration: underline;
+    letter-spacing: 1px;
+  }
+
+  &__comment {
+    position: relative;
+    margin-bottom: 20px;
+
+    & > span {
+      display: block;
+    }
+
+    & > span:nth-of-type(1) {
+      font-size: 1.3rem;
+      color: #b8b8b8;
+      margin-bottom: 0.5em;
+    }
+
+    & > p:nth-of-type(1) {
+      font-size: 1.6rem;
+      color: $light;
+    }
+
+    & > div:nth-of-type(1) {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.character-modal-register-message {
+  &:hover {
+    cursor: pointer;
+  }
+  span {
+    font-size: 1.6rem;
+    color: $light;
+    text-decoration: underline;
+  }
+}
+
+.character-modal-comment {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+
+  border-top: 2px solid $light;
+
+  &__textarea {
+    margin-top: 25px;
+    background-color: $light;
+    border-radius: $radius;
+    color: $dark;
+    width: 100%;
+    margin-right: 10px;
+    height: 80px;
+    padding: 0.7em;
+  }
+
+  & > span:nth-of-type(1) {
+    position: absolute;
+    bottom: -1.25em;
+    left: 0.7em;
+    font-size: 1.2rem;
+    color: $error;
+  }
+
+  & > div:nth-of-type(1) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

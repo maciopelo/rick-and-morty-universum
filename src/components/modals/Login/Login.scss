@@ -1,0 +1,121 @@
+@import "../../../styles/variables";
+
+.login-modal-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 555px;
+  width: 100%;
+  background-color: $dark;
+  border-radius: $radius;
+  box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.65);
+  padding: 2.7rem 2.5rem;
+
+  & > .close-wrapper {
+    position: absolute;
+    right: 32px;
+    top: 5px;
+  }
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+
+  &__text {
+    font-size: 6.4rem;
+    color: $light;
+  }
+
+  &__image {
+    img {
+      &[data-islogged="true"] {
+        -webkit-animation: spin 2s linear infinite;
+        -moz-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+      }
+
+      @-moz-keyframes spin {
+        100% {
+          -moz-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @keyframes spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      max-width: 115px;
+      width: 100%;
+      margin-right: 5px;
+    }
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 230px;
+  & > div {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+}
+
+.login-response-message {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 5px 0 15px 0;
+  min-height: 2.5em;
+
+  & > span {
+    position: absolute;
+    top: 0;
+    font-size: 2.4rem;
+
+    &[data-error="true"] {
+      color: $error;
+    }
+
+    &[data-success="true"] {
+      color: rgb(79, 192, 79);
+    }
+  }
+}
+
+.login-bottom-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__text {
+    font-size: 1.6rem;
+    color: $light;
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & > button {
+    height: 2em;
+    min-width: 70px;
+    height: auto;
+    & > span {
+      font-size: 1.6rem;
+      padding: 6px 10px;
+    }
+  }
+}
