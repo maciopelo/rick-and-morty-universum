@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalsContainer from "./components/ModalsContainer/ModalsContainer";
 import { authUser } from "./redux/slices/userSlice";
 import NotFound from "./pages/NotFound/NotFound";
+import RequireAuth from "./utils/RequireAuth";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,14 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

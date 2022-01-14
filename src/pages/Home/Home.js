@@ -66,13 +66,19 @@ const HomePage = () => {
 
         <div className="characters-list">
           {characters.map((character, idx) => {
+            const mappedCharacter = {
+              ...character,
+              characterId: character.id,
+              episode: character.episode[0],
+              location: character.location.name,
+            };
             return (
               <CharacterTile
                 key={character.id}
                 character={character}
                 onClick={() =>
                   dispatch(
-                    openModal({ type: MODAL.CHARACTER, data: character })
+                    openModal({ type: MODAL.CHARACTER, data: mappedCharacter })
                   )
                 }
               />

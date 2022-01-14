@@ -19,12 +19,10 @@ export const loginUser = createAsyncThunk(
       const data = await response.json();
 
       const user = {
+        commentsCount: data.user.comments.length,
         email: data.user.email,
         login: data.user.username,
-        favourites: data.user.favourites.map((fav) => ({
-          id: fav.id,
-          characterId: fav.characterId,
-        })),
+        favourites: data.user.favourites,
         token: data.user.jwt,
       };
 
@@ -83,13 +81,12 @@ export const authUser = createAsyncThunk(
 
       const data = await response.json();
 
+      console.log(data.favourites);
       const user = {
+        commentsCount: data.comments.length,
         email: data.email,
         login: data.username,
-        favourites: data.favourites.map((fav) => ({
-          id: fav.id,
-          characterId: fav.characterId,
-        })),
+        favourites: data.favourites,
         token: jwt,
       };
 

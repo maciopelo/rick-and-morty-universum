@@ -1,17 +1,11 @@
 @import "../../styles/variables";
 @import "../../styles/mixins";
+@import "../../styles/global";
 
 .characters-container {
+  @extend .main-container;
   display: flex;
   flex-direction: column;
-  margin-top: 1.6 * $siteHeaderHeight;
-  margin-bottom: 2 * $siteFooterHeight;
-  max-width: 1200px;
-  width: 100%;
-
-  @include medium {
-    margin-top: 1.2 * $siteHeaderHeight;
-  }
 
   &__fetch-more {
     display: flex;

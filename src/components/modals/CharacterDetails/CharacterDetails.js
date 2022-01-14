@@ -24,7 +24,7 @@ import {
 const CharacterDetails = () => {
   const dispatch = useDispatch();
   const {
-    data: { id, name, status, species, image, episode, location },
+    data: { characterId, name, status, species, image, episode, location },
   } = useSelector((state) => state.modal);
 
   const {
@@ -48,20 +48,22 @@ const CharacterDetails = () => {
 
   useEffect(() => {
     const fetchEpisodeName = async () => {
-      const res = await fetch(episode[0]);
+      const res = await fetch(episode);
       const data = await res.json();
       setLastEpisode(data.name);
     };
 
     const fetchComments = async () => {
-      const res = await fetch(`${STRAPI_URL}/comments/?characterId=${id}`);
+      const res = await fetch(
+        `${STRAPI_URL}/comments/?characterId=${characterId}`
+      );
       const data = await res.json();
       setComments(data.sort((a, b) => (a.created_at > b.created_at ? -1 : 1)));
     };
 
     fetchEpisodeName();
     fetchComments();
-  }, [episode, id]);
+  }, [episode, characterId]);
 
   const onSubmit = async (data) => {
     let confirmRemoval = confirm("Are you sure to add comment?");
@@ -73,7 +75,7 @@ const CharacterDetails = () => {
       const comment = JSON.stringify({
         text: data.text,
         date: new Date().toISOString(),
-        characterId: id,
+        characterId: characterId,
         users_permissions_user: jwt.id,
       });
 
@@ -113,9 +115,9 @@ const CharacterDetails = () => {
   };
 
   const handleFavourite = async () => {
-    if (favouritesCharactersId.includes(id)) {
+    if (favouritesCharactersId.includes(characterId)) {
       const favToDeleteId = favourites.filter(
-        (fav) => fav.characterId === id
+        (fav) => fav.characterId === characterId
       )[0].id;
 
       const res = await fetch(`${STRAPI_URL}/favourites/${favToDeleteId}`, {
@@ -135,7 +137,13 @@ const CharacterDetails = () => {
 
     const jwt = jwt_decode(localStorage.getItem("jwt"));
     const favourite = JSON.stringify({
-      characterId: id,
+      characterId: characterId,
+      name: name,
+      status: status,
+      species: species,
+      image: image,
+      episode: episode,
+      location: location,
       users_permissions_user: jwt.id,
     });
 
@@ -150,7 +158,17 @@ const CharacterDetails = () => {
     });
 
     const data = await res.json();
-    dispatch(addToFavourites({ id: data.id, characterId: data.characterId }));
+    dispatch(
+      addToFavourites({
+        id: data.id,
+        characterId: data.characterId,
+        image: image,
+        status: data.status,
+        species: data.species,
+        episode: data.episode,
+        location: data.location,
+      })
+    );
     alert("Added to favourite characters");
     return;
   };
@@ -165,7 +183,7 @@ const CharacterDetails = () => {
           <div
             className="heart-icon"
             onClick={handleFavourite}
-            data-isfavourites={favouritesCharactersId.includes(id)}
+            data-isfavourites={favouritesCharactersId.includes(characterId)}
           >
             {heartIcon}
           </div>
@@ -180,7 +198,7 @@ const CharacterDetails = () => {
           </div>
           <div className="character-details__other">
             <span>Last known location:</span>
-            <span>{location.name}</span>
+            <span>{location}</span>
           </div>
 
           <div className="character-details__other">

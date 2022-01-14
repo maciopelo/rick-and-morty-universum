@@ -74,7 +74,6 @@ export const charactersSlice = createSlice({
       })
       .addCase(fetchWithQueryParam.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.characters = [...action.payload.results];
         state.nextPage = action.payload.info.next;
       })

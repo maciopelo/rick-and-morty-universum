@@ -118,5 +118,10 @@
     @include tiny {
       order: 1px;
     }
+
+    &:hover {
+      transition: all 0.3s;
+      text-decoration: underline;
+    }
   }
 }
