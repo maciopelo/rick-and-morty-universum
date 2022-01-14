@@ -9,6 +9,7 @@ import rocket from "./assets/rocket.svg";
 import { useDispatch, useSelector } from "react-redux";
 import ModalsContainer from "./components/ModalsContainer/ModalsContainer";
 import { authUser } from "./redux/slices/userSlice";
+import NotFound from "./pages/NotFound/NotFound";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<div>Not found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         <div className="scroll-up-button" data-visible={isVisible}>

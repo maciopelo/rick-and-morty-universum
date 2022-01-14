@@ -19,6 +19,7 @@ html {
 }
 
 body {
+  overflow-y: scroll;
   background-color: $dark;
   font-family: "Open Sans", sans-serif;
 }
@@ -37,6 +38,11 @@ input {
   border: none;
   outline: none;
   background: none;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
 }
 
 .modal-bg {

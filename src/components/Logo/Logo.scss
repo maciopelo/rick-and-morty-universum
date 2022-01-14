@@ -11,6 +11,10 @@
     width: 300px;
   }
 
+  @include tiny {
+    width: 245px;
+  }
+
   &:hover {
     cursor: pointer;
   }

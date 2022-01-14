@@ -6,9 +6,12 @@ import { openModal } from "../../redux/slices/modalSlice";
 import { clearState } from "../../redux/slices/userSlice";
 import "./SiteHeader.scss";
 import MODAL from "../../utils/modalTypesEnum";
+import profile from "../../assets/profile.png";
 import logout from "../../assets/logout.png";
+import { useNavigate } from "react-router-dom";
 
 const SiteHeader = ({ scrolled }) => {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogged } = useSelector((state) => state.user);
 
@@ -22,10 +25,23 @@ const SiteHeader = ({ scrolled }) => {
       <Logo />
 
       {isLogged ? (
-        <div className="logout" onClick={handleLogout}>
-          <img className="logout__icon" src={logout} alt="Rick Cucumber" />
-          <span className="logout__text">logout</span>
-        </div>
+        <nav className="site-nav">
+          <div className="option" onClick={() => navigate("/profile")}>
+            <div
+              className="option__icon option__icon--profile"
+              style={{ backgroundImage: `url(${profile})` }}
+            />
+            <span className="option__text">profile</span>
+          </div>
+
+          <div className="option" onClick={handleLogout}>
+            <div
+              className="option__icon  option__icon--logout"
+              style={{ backgroundImage: `url(${logout})` }}
+            />
+            <span className="option__text">logout</span>
+          </div>
+        </nav>
       ) : (
         <Button
           text="Login"

@@ -36,27 +36,87 @@
       height: 30px;
       min-width: 80px;
       & > span {
-        // font-size: ;
         padding: 5px 10px;
       }
     }
   }
 }
 
-.logout {
-  width: 45px;
+.site-nav {
+  display: flex;
+  align-items: flex-end;
+
+  @include tiny {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  & > div:not(:last-child) {
+    margin-right: 20px;
+
+    @include tiny {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 60px;
+
+  @include tiny {
+    flex-direction: row;
+    align-items: flex-end;
+  }
 
   &:hover {
     cursor: pointer;
   }
 
   &__icon {
+    height: 60px;
     width: 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 5px;
+
+    @include tiny {
+      order: 2;
+      height: 30px;
+      margin: 0;
+      margin-left: 3px;
+    }
+
+    &--profile {
+      background-position: top;
+      background-size: 60px;
+      @include tiny {
+        background-size: 20px;
+      }
+    }
+
+    &--logout {
+      background-position: bottom;
+      background-size: 63px;
+      @include tiny {
+        background-size: 20px;
+      }
+    }
   }
 
   &__text {
-    font-size: 1.2rem;
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
     font-weight: bold;
     color: $light;
+
+    @include tiny {
+      order: 1px;
+    }
   }
 }
