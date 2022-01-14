@@ -33,15 +33,6 @@ const Login = () => {
     reset();
   };
 
-  const handleRegisterModal = () => {
-    dispatch(openModal(MODAL.LOGIN));
-  };
-
-  useEffect(() => {
-    if (status === "succeeded") {
-    }
-  }, [status]);
-
   return (
     <div className="login-modal-wrapper">
       <Close onClick={() => dispatch(closeModal())} />
@@ -101,11 +92,11 @@ const Login = () => {
       <div className="login-bottom-panel">
         <span
           className="login-bottom-panel__text"
-          onClick={handleRegisterModal}
+          onClick={() => dispatch(openModal({ type: MODAL.LOGIN }))}
         >
           &larr; back to login
         </span>
-        <Button text="login" form="login-form" type="submit" />
+        <Button text="register" form="login-form" type="submit" />
       </div>
     </div>
   );

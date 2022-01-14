@@ -30,7 +30,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     dispatch(loginUser(data));
-    setTimeout(() => dispatch(clearMessageAndStatus()), 2 * 1000);
+    setTimeout(() => dispatch(clearMessageAndStatus()), 5 * 1000);
     reset();
   };
 

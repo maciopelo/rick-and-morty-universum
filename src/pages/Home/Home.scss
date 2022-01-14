@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .characters-container {
   display: flex;
@@ -7,6 +8,10 @@
   margin-bottom: 2 * $siteFooterHeight;
   max-width: 1200px;
   width: 100%;
+
+  @include medium {
+    margin-top: 1.2 * $siteHeaderHeight;
+  }
 
   &__fetch-more {
     display: flex;
@@ -45,6 +50,11 @@
 
   & > div:nth-of-type(2) {
     width: 50%;
+
+    @include medium {
+      width: 100%;
+      max-width: 242px;
+    }
   }
 
   & > div:nth-of-type(3) {

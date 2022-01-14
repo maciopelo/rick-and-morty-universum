@@ -1,0 +1,36 @@
+@import "./variables";
+
+// max - 480px
+@mixin tiny {
+  @media (max-width: #{$tiny}) {
+    @content;
+  }
+}
+
+// max - 800px
+@mixin small {
+  @media (max-width: #{$small}) {
+    @content;
+  }
+}
+
+// max - 1000px
+@mixin medium {
+  @media (max-width: #{$medium}) {
+    @content;
+  }
+}
+
+// max - 1200px
+@mixin default {
+  @media (max-width: #{$default}) {
+    @content;
+  }
+}
+
+// min - 1200px <> max - 1440px
+@mixin large {
+  @media (min-width: #{$default + 1px}) and (max-width: #{$large}) {
+    @content;
+  }
+}

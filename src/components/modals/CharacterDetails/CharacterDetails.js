@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { commentSchema } from "../../../validators/yupSchemas";
 import bin from "../../../assets/bin.svg";
 import MODAL from "../../../utils/modalTypesEnum";
+import { RICK_API_URL, STRAPI_URL } from "../../../config/api";
 
 const CharacterDetails = () => {
   const dispatch = useDispatch();
@@ -41,9 +42,7 @@ const CharacterDetails = () => {
     };
 
     const fetchComments = async () => {
-      const res = await fetch(
-        `http://localhost:1337/comments/?characterId=${id}`
-      );
+      const res = await fetch(`${STRAPI_URL}/comments/?characterId=${id}`);
       const data = await res.json();
       setComments(data.sort((a, b) => (a.created_at > b.created_at ? -1 : 1)));
     };
@@ -66,7 +65,7 @@ const CharacterDetails = () => {
         users_permissions_user: jwt.id,
       });
 
-      const res = await fetch("http://localhost:1337/comments", {
+      const res = await fetch(`${STRAPI_URL}/comments`, {
         method: "POST",
         body: comment,
         headers: {
@@ -86,7 +85,7 @@ const CharacterDetails = () => {
   const handleCommentRemoval = async (id) => {
     let confirmRemoval = confirm("Are you sure to delete comment?");
     if (confirmRemoval) {
-      const res = await fetch(`http://localhost:1337/comments/${id}`, {
+      const res = await fetch(`${STRAPI_URL}/comments/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -173,11 +172,10 @@ const CharacterDetails = () => {
           </button>
         </form>
       ) : (
-        <div
-          className="character-modal-register-message"
-          onClick={() => dispatch(openModal({ type: MODAL.LOGIN }))}
-        >
-          <span>Login to leave a comment.</span>
+        <div className="character-modal-register-message">
+          <span onClick={() => dispatch(openModal({ type: MODAL.LOGIN }))}>
+            Login to leave a comment.
+          </span>
         </div>
       )}
     </div>

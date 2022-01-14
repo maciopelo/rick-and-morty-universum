@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk, rejectWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { RICK_API_URL } from "../../config/api";
 
 export const fetchCharacters = createAsyncThunk(
   "characters/fetchCharacters",
   async () => {
-    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const response = await fetch(`${RICK_API_URL}/character`);
     return response.json();
   }
 );
@@ -21,9 +22,7 @@ export const fetchWithQueryParam = createAsyncThunk(
   "characters/fetchWithQueryParam",
   async (param, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?name=${param}`
-      );
+      const response = await fetch(`${RICK_API_URL}/character/?name=${param}`);
       if (response.status === 404)
         return new Promise((resolve, reject) =>
           resolve({ results: [], info: { next: "" } })

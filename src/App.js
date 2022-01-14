@@ -52,7 +52,7 @@ const App = () => {
         </Routes>
 
         <div className="scroll-up-button" data-visible={isVisible}>
-          <SvgIcon icon={rocket} size={[70, 70]} onClick={scrollToTop} />
+          <SvgIcon icon={rocket} onClick={scrollToTop} />
         </div>
 
         <SiteFooter />

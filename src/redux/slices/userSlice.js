@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { STRAPI_URL } from "../../config/api";
 
 export const loginUser = createAsyncThunk(
   "user/login",
@@ -7,7 +8,7 @@ export const loginUser = createAsyncThunk(
   async ({ login, password }, thunkAPI) => {
     try {
       const body = JSON.stringify({ identifier: login, password: password });
-      const response = await fetch("http://localhost:1337/auth/local/", {
+      const response = await fetch(`${STRAPI_URL}/auth/local/`, {
         method: "POST",
         body: body,
         headers: {
@@ -44,16 +45,13 @@ export const registerUser = createAsyncThunk(
         email: email,
         password: password,
       });
-      const response = await fetch(
-        "http://localhost:1337/auth/local/register",
-        {
-          method: "POST",
-          body: body,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${STRAPI_URL}/auth/local/register`, {
+        method: "POST",
+        body: body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json();
 
       if (response.status === 200) {
@@ -72,7 +70,7 @@ export const authUser = createAsyncThunk(
 
   async (jwt, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:1337/users/me/", {
+      const response = await fetch(`${STRAPI_URL}/users/me`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
           Accept: "*/*",

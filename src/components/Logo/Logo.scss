@@ -1,10 +1,15 @@
 @import "../../styles/variables";
 @import "../../styles/classes";
+@import "../../styles/mixins";
 
 .logo {
+  @extend .no-select;
   width: 400px;
   background-color: $dark;
-  @extend .no-select;
+
+  @include medium {
+    width: 300px;
+  }
 
   &:hover {
     cursor: pointer;
@@ -25,6 +30,16 @@
     animation-duration: 2.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+
+    @include medium {
+      width: 50px;
+      height: 50px;
+    }
+
+    @include tiny {
+      width: 40px;
+      height: 40px;
+    }
   }
 }
 
