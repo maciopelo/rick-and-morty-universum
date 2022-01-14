@@ -21,6 +21,10 @@ export const loginUser = createAsyncThunk(
       const user = {
         email: data.user.email,
         login: data.user.username,
+        favourites: data.user.favourites.map((fav) => ({
+          id: fav.id,
+          characterId: fav.characterId,
+        })),
         token: data.user.jwt,
       };
 
@@ -82,6 +86,10 @@ export const authUser = createAsyncThunk(
       const user = {
         email: data.email,
         login: data.username,
+        favourites: data.favourites.map((fav) => ({
+          id: fav.id,
+          characterId: fav.characterId,
+        })),
         token: jwt,
       };
 
@@ -110,11 +118,22 @@ export const userSlice = createSlice({
       state.errorMessage = "";
       state.status = "idle";
     },
+
     clearState: (state) => {
       state.user = null;
       state.status = "idle";
       state.resMessage = "";
       state.isLogged = false;
+    },
+
+    addToFavourites: (state, action) => {
+      state.user.favourites = [...state.user.favourites, action.payload];
+    },
+
+    deleteFromFavourites: (state, action) => {
+      state.user.favourites = state.user.favourites.filter(
+        (fav) => action.payload !== fav.id
+      );
     },
   },
 
@@ -159,5 +178,10 @@ export const userSlice = createSlice({
 });
 
 const { reducer, actions } = userSlice;
-export const { clearMessageAndStatus, clearState } = actions;
+export const {
+  clearMessageAndStatus,
+  clearState,
+  addToFavourites,
+  deleteFromFavourites,
+} = actions;
 export default reducer;

@@ -14,16 +14,28 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { commentSchema } from "../../../validators/yupSchemas";
 import bin from "../../../assets/bin.svg";
 import MODAL from "../../../utils/modalTypesEnum";
-import { RICK_API_URL, STRAPI_URL } from "../../../config/api";
+import { STRAPI_URL } from "../../../config/api";
+import heartIcon from "../../../assets/heart";
+import {
+  addToFavourites,
+  deleteFromFavourites,
+} from "../../../redux/slices/userSlice";
 
 const CharacterDetails = () => {
   const dispatch = useDispatch();
   const {
     data: { id, name, status, species, image, episode, location },
   } = useSelector((state) => state.modal);
-  const { isLogged } = useSelector((state) => state.user);
+
+  const {
+    isLogged,
+    user: { favourites },
+  } = useSelector((state) => state.user);
+
   const [lastEpisode, setLastEpisode] = useState("");
   const [comments, setComments] = useState([]);
+
+  const favouritesCharactersId = favourites.map((fav) => fav.characterId);
 
   const {
     register,
@@ -100,6 +112,49 @@ const CharacterDetails = () => {
     }
   };
 
+  const handleFavourite = async () => {
+    if (favouritesCharactersId.includes(id)) {
+      const favToDeleteId = favourites.filter(
+        (fav) => fav.characterId === id
+      )[0].id;
+
+      const res = await fetch(`${STRAPI_URL}/favourites/${favToDeleteId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+          Accept: "*/*",
+        },
+      });
+
+      const data = await res.json();
+      dispatch(deleteFromFavourites(data.id));
+      alert("Deleted from favourite characters");
+      return;
+    }
+
+    const jwt = jwt_decode(localStorage.getItem("jwt"));
+    const favourite = JSON.stringify({
+      characterId: id,
+      users_permissions_user: jwt.id,
+    });
+
+    const res = await fetch(`${STRAPI_URL}/favourites`, {
+      method: "POST",
+      body: favourite,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+        Accept: "*/*",
+      },
+    });
+
+    const data = await res.json();
+    dispatch(addToFavourites({ id: data.id, characterId: data.characterId }));
+    alert("Added to favourite characters");
+    return;
+  };
+
   return (
     <div className="character-modal-wrapper">
       <Close onClick={() => dispatch(closeModal())} />
@@ -107,6 +162,13 @@ const CharacterDetails = () => {
       <div className="character-info">
         <div className="character-info__image">
           <RenderSmoothImage src={image} alt={name} objectFit="cover" />
+          <div
+            className="heart-icon"
+            onClick={handleFavourite}
+            data-isfavourites={favouritesCharactersId.includes(id)}
+          >
+            {heartIcon}
+          </div>
         </div>
 
         <div className="character-details">

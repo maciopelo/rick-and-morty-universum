@@ -28,8 +28,10 @@
 .character-info {
   display: flex;
   margin-bottom: 35px;
+  position: relative;
 
   &__image {
+    @extend .no-select;
     margin-right: 20px;
 
     @include medium {
@@ -40,6 +42,46 @@
       width: 300px;
       height: 300px;
       border-radius: $radius;
+    }
+  }
+}
+
+.heart-icon {
+  display: flex;
+  justify-content: center;
+  padding: 3px;
+  align-items: center;
+  position: absolute;
+  background-color: $dark;
+  left: 0;
+  bottom: 0;
+  width: 42px;
+  height: 42px;
+  border-top-right-radius: $radius;
+
+  &[data-isfavourites="true"] {
+    & > svg {
+      path {
+        fill: #e22f2f;
+      }
+    }
+  }
+
+  @include medium {
+    width: 35px;
+    height: 35px;
+  }
+
+  & > svg {
+    width: 90%;
+    margin-top: 5px;
+    margin-right: 3px;
+
+    &:hover {
+      cursor: pointer;
+      path {
+        fill: #e22f2f;
+      }
     }
   }
 }
