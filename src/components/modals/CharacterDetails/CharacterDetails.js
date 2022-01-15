@@ -27,15 +27,12 @@ const CharacterDetails = () => {
     data: { characterId, name, status, species, image, episode, location },
   } = useSelector((state) => state.modal);
 
-  const {
-    isLogged,
-    user: { favourites },
-  } = useSelector((state) => state.user);
+  const { isLogged, user } = useSelector((state) => state.user);
 
   const [lastEpisode, setLastEpisode] = useState("");
   const [comments, setComments] = useState([]);
 
-  const favouritesCharactersId = favourites.map((fav) => fav.characterId);
+  const favouritesCharactersId = user?.favourites.map((fav) => fav.characterId);
 
   const {
     register,
@@ -84,7 +81,7 @@ const CharacterDetails = () => {
         body: comment,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           Accept: "*/*",
         },
       });
@@ -115,8 +112,9 @@ const CharacterDetails = () => {
   };
 
   const handleFavourite = async () => {
+    console.log("asd");
     if (favouritesCharactersId.includes(characterId)) {
-      const favToDeleteId = favourites.filter(
+      const favToDeleteId = user.favourites.filter(
         (fav) => fav.characterId === characterId
       )[0].id;
 
@@ -124,7 +122,7 @@ const CharacterDetails = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           Accept: "*/*",
         },
       });
@@ -152,7 +150,7 @@ const CharacterDetails = () => {
       body: favourite,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         Accept: "*/*",
       },
     });
@@ -180,13 +178,15 @@ const CharacterDetails = () => {
       <div className="character-info">
         <div className="character-info__image">
           <RenderSmoothImage src={image} alt={name} objectFit="cover" />
-          <div
-            className="heart-icon"
-            onClick={handleFavourite}
-            data-isfavourites={favouritesCharactersId.includes(characterId)}
-          >
-            {heartIcon}
-          </div>
+          {isLogged && (
+            <div
+              className="heart-icon"
+              onClick={handleFavourite}
+              data-isfavourites={favouritesCharactersId.includes(characterId)}
+            >
+              {heartIcon}
+            </div>
+          )}
         </div>
 
         <div className="character-details">

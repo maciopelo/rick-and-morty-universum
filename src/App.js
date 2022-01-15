@@ -28,7 +28,7 @@ const App = () => {
   };
 
   const checkLocalStorage = () => {
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
+    const jwt = localStorage.getItem("jwt");
     if (jwt) {
       dispatch(authUser(jwt));
     }

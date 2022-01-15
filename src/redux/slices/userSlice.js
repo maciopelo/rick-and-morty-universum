@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
       };
 
       if (response.status === 200) {
-        localStorage.setItem("jwt", JSON.stringify(data.jwt));
+        localStorage.setItem("jwt", data.jwt);
         return { ...user };
       } else return thunkAPI.rejectWithValue();
     } catch (e) {
@@ -81,7 +81,6 @@ export const authUser = createAsyncThunk(
 
       const data = await response.json();
 
-      console.log(data.favourites);
       const user = {
         commentsCount: data.comments.length,
         email: data.email,
