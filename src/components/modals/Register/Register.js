@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../Login/Login.scss";
 import { registerSchema } from "../../../validators/yupSchemas";
 import { useForm } from "react-hook-form";
