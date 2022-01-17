@@ -13,9 +13,6 @@
 
   &:hover {
     background-color: $white;
-
-    & > span {
-      color: $dark;
-    }
+    color: $dark;
   }
 }
