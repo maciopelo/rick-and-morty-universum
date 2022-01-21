@@ -100,7 +100,7 @@ const CharacterDetails = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           Accept: "*/*",
         },
       });

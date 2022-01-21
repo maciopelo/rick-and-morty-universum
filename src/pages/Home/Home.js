@@ -38,8 +38,12 @@ const HomePage = () => {
     dispatch(fetchCharacters());
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
     if (filterKeyword.length > 0) dispatch(fetchWithQueryParam(filterKeyword));
+  };
+
+  const onEnterPress = (e) => {
+    if (e.key === "Enter") dispatch(fetchWithQueryParam(filterKeyword));
   };
 
   return (
@@ -58,6 +62,7 @@ const HomePage = () => {
               onChange={handleFilterKeywordChange}
               className="input"
               placeholder="Find character..."
+              onKeyUp={onEnterPress}
             />
           </div>
 
